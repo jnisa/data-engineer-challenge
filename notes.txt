@@ -1,0 +1,119 @@
+
+event_v2_data
+    - elements:
+        .[KEEP ] 'event_id', 
+        .[ERASE] 'event_sort_id', 
+        .[ERASE] 'date', 
+        .[ERASE] 'event_type', 
+        .[KEEP ] 'flow_id', 
+        .[KEEP ] 'transaction_id', 
+        .[ERASE] 'updates', 
+        .[KEEP ] 'transaction_lifecycle_event', 
+        .[ERASE] 'third_party_request', 
+        .[ERASE] 'third_party_response', 
+        .[ERASE] 'notification', 
+        .[KEEP ] 'created_at', 
+        .[ERASE] 'notification_type', 
+        .[KEEP ] 'error_details',
+            . 'decline_reason'
+            . 'decline_type' 
+        .[ERASE] 'delivered', 
+        .[ERASE] 'notification_config_id', 
+        .[ERASE] 'connection_callback_request_id', 
+        .[ERASE] 'transaction_request_id', 
+        .[ERASE] 'old_event_id', 
+        .[ERASE] 'payment_id', 
+        .[ERASE] 'reason', 
+        .[ERASE] 'connection_id'
+
+transaction
+    - elements:
+        .[KEEP ] 'transaction_id', 
+        .[ERASE] 'processor_transaction_id', 
+        .[KEEP ] 'transaction_type', 
+        .[ERASE] 'date', 
+        .[KEEP ] 'processor_merchant_account_id', 
+        .[ERASE] 'merchant_reference', 
+        .[KEEP ] 'amount', 
+        .[KEEP ] 'currency_code', 
+        .[ERASE] 'direction', 
+        .[ERASE] 'status', 
+        .[ERASE] 'risk_data', 
+        .[ERASE] 'sale_transaction_id', 
+        .[ERASE] 'created_at', 
+        .[ERASE] 'updated_at', 
+        .[ERASE] 'external_risk_data', 
+        .[ERASE] 'network_transaction_id', 
+        .[ERASE] 'payment_id', 
+        .[ERASE] 'token_id', 
+        .[ERASE] 'statement_descriptor'
+
+transaction_request
+    - elements:
+        .[ERASE] 'transaction_request_id', 
+        .[ERASE] 'idempotency_key', 
+        .[ERASE] 'transaction_request_type', 
+        .[ERASE] 'transaction_id', 
+        .[ERASE] 'processor_merchant_account_id', 
+        .[ERASE] 'user_id', 
+        .[ERASE] 'created_at', 
+        .[ERASE] 'amount', 
+        .[ERASE] 'currency_code', 
+        .[ERASE] 'submit_for_settlement', 
+        .[ERASE] 'billing_address', 
+        .[ERASE] 'reference', 
+        .[ERASE] 'final', 
+        .[ERASE] 'reason', 
+        .[ERASE] 'sale_transaction_id', 
+        .[ERASE] 'customer_details', 
+        .[ERASE] 'recurring', 
+        .[KEEP ] 'flow_id', 
+        .[KEEP ] 'vault_options',
+            . 'payment_method' 
+        .[KEEP ] 'token_id', 
+        .[ERASE] 'payment_request_id', 
+        .[ERASE] 'statement_descriptor', 
+        .[ERASE] 'metadata'
+
+
+payment_instrument_token_data
+    - elements:
+        .[KEEP ] 'token_id', 
+        .[ERASE] 'analytics_id', 
+        .[ERASE] 'merchant_analytics_id', 
+        .[ERASE] 'token_type', 
+        .[KEEP ] 'payment_instrument_type', 
+        .[ERASE] 'payment_instrument_data', 
+        .[KEEP ] 'vault_data',
+            . 'customer_id' 
+        .[KEEP ] 'three_d_secure_authentication', 
+        .[ERASE] 'multi_use_token_id'
+
+
+------- Pipeline 
+
+	{
+		"event_v2_data.event_id": "value",
+		"event_v2_data.flow_id": "value",
+		"event_v2_data.created_at": "value",
+		"event_v2_data.transaction_lifecycle_event": "value",
+		"event_v2_data.error_details.decline_reason": "value",
+		"event_v2_data.error_details.decline_type": "value",
+		"transaction_request.vault_options.payment_method": "value",
+		"transaction.transaction_id": "value",
+		"transaction.transaction_type": "value",
+		"transaction.amount": "value",
+		"transaction.currency_code": "value",
+		"transaction.processor_merchant_account_id": "value",
+		"payment_instrument_token_data.three_d_secure_authentication": "value",
+		"payment_instrument_token_data.payment_instrument_type": "value",
+		"payment_instrument_token_data.vault_data.customer_id": "value"
+	}
+
+
+  event_v2_data.transaction_id = transaction.transaction_id
+  event_v2_data.flow_id = transaction_request.flow_id
+  transaction_request.token_id = payment_instrument_token_data.token_id
+
+
+  all the datatypes are from postgressqleleme
