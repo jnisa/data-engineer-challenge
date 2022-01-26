@@ -6,6 +6,7 @@ import sqlite3
 
 
 from tdd_stage.app.engine.python.mining.collier import collier
+from tdd_stage.app.engine.python.mining.preen import unfold_jsonb
 from tdd_stage.app.engine.python.targeting.selector import ElementsSelector
 
 
@@ -49,4 +50,5 @@ tables = list(map.keys())
 
 el_select = ElementsSelector(schema, elements, vals, key_cols, list(tables))
 
+values, columns = unfold_jsonb(el_select.schema[0], el_select.elements[0], el_select.vals[0])
 pdb.set_trace()

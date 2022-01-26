@@ -1,7 +1,10 @@
 
 
-
+import pdb
 from collections import MutableMapping
+from sqlite3.dbapi2 import adapt
+
+from tdd_stage.app.engine.python.crutches.auxiliars import first_ele
 
 
 def preen(d: dict, parent_key = '', sep = '.'):
@@ -26,15 +29,16 @@ def preen(d: dict, parent_key = '', sep = '.'):
     return dict(items)
 
 
-def spot_jsonb(dtypes: list):
+def new_els_gen(parent: str, subels: list):
 
     '''
-    lists all the indexes whose value has a jsonb data type
-
-    :param dtypes: list of the data types from all the values
+    generated new element ids based on the parent element and its predecessors
+    
+    :param parent: parent element to be subdivided
+    :param subels: subelements resultant from the division
     '''
 
-    return [idx for idx, val in enumerate(dtypes) if val == 'jsonb']
+    return [parent + "." + s for s in subels]
 
 
 def unfold_jsonb(sch: list, cols: list, vals: list):
@@ -48,17 +52,65 @@ def unfold_jsonb(sch: list, cols: list, vals: list):
     :param vals: variable/list that handles all the data values
     '''
 
+    jsonb_idx = sch.index('jsonb')
 
-    jsonb_idxs = [spot_jsonb(subset) for subset in sch] 
+    conv_values = [jsonb_conv(val, jsonb_idx) for val in vals]
+    
+    get_elements = lambda x: list(x.keys()) if x != None else (None)
+    new_elements = first_ele([get_elements(val) for val in conv_values], None)
+    
+    get_values = lambda x: list(x.values()) if x != None else ([None] * len(new_elements))
+    new_vals = [get_values(val) for val in conv_values]
 
-    # 1. go record by record on the vals list
-    # 2. iterate over the positions collected on the jsonb_idxs
-    # 3. if the those positions are not None values store them in another list because
-    # after unfolding the nested dicts they will be dropped
-    # 4. unfold all the nested dicts and add them to the vals lst
+    elements = adapt_feature(cols, new_els_gen(cols[jsonb_idx], new_elements), jsonb_idx)
+    #schema = adapt_feature(sch, map_dtypes('primeiro record diferente de lista none'), jsonb_idx)    
+    vals = [adapt_feature(vals[i], new_vals[i], jsonb_idx) for i in range(len(vals))]
 
-    # ATTENTION we have to make sure that dicts columns have dict columns in all the records
-    # That will come after testing the ElementsSelector
+    pdb.set_trace()
 
-    return elems, dtypes, vals 
+    return elements, vals
+
+
+def jsonb_conv(values: list, idx: int):
+
+    '''
+    convert the jsonb values into a python a dictionary
+
+    :param values: set of values to be analyzed
+    :param idx: value of the index that possesses jsonb data type variables
+    '''
+
+    unfold_function = lambda x : eval(x[idx].replace('null', 'None')) if x[idx] != None else (None)
+
+    return unfold_function(values)
+
+
+def adapt_feature(old_vals: list, new_vals: list, idx: int):
+
+    '''
+    adaption of the features after unfolding data entries
+
+    :param old_vals: set of values to be updated
+    :param new_vals: set of values that will be added to the old ones
+    :param idx: index of where must occur the adaptation
+    '''
+
+    del old_vals[idx]
+
+    for id, val in enumerate(new_vals):
+        old_vals.insert(idx + id, val)
+
+    return old_vals
+
+
+def map_dtypes(dtypes_lst: list):
+
+    '''
+    establishes a parallel between python and sqlite datatypes
+    
+    :param dtypes_lst: list of the python data types to be converted
+    '''
+
+    return None
+
 

@@ -1,6 +1,5 @@
 
 
-import pdb
 import unittest
 from tdd_stage.app.engine.python.targeting.selector import ElementsSelector
 
@@ -28,10 +27,10 @@ class TestElementsSelector(unittest.TestCase):
         return self.assertEqual(result, expected)
 
 
-    def test_take_down_tc1(self):
+    def test_elements_selector_tc1(self):
 
         '''
-        take_down - 1st Test Case Scenario
+        ElementsSelector - 1st Test Case Scenario
         Complexity: 1/4
         '''
 

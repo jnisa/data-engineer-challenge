@@ -26,3 +26,21 @@ def nested_levls_counter(lst: list):
 
     f = lambda lst: 0 if not isinstance(lst,list) else (f(lst[0]) + f(lst[1:]) if len(lst) else 1)
     return f(lst) - 1
+
+
+def first_ele(lst: list, ref):
+
+    '''
+    gets the first value that is different from the reference value
+
+    :param lst: list that will be analyzed
+    :param ref: reference value that will serve the comparison
+    '''
+
+    for i in lst:
+        if i != ref:
+            val = i
+        break
+
+    return val
+
