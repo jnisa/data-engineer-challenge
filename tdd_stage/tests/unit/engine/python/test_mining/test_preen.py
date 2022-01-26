@@ -78,34 +78,34 @@ class TestPreen(unittest.TestCase):
         return self.assertEqual(result, expected)
 
 
-    def test_adapt_assets_tc1(self):
+    # def test_adapt_assets_tc1(self):
 
-        '''
-        adapt_assets - 1st Test Case Scenario
-        Complexity: 1/4
-        '''
+    #     '''
+    #     adapt_assets - 1st Test Case Scenario
+    #     Complexity: 1/4
+    #     '''
 
-        elements = ['car']
-        expected_elements = ['car.id', 'car.features.brand', 'car.features.model']
+    #     elements = ['car']
+    #     expected_elements = ['car.id', 'car.features.brand', 'car.features.model']
 
-        dtypes = ['jsonb']
-        expected_dtypes = [int, str, str]
+    #     dtypes = ['jsonb']
+    #     expected_dtypes = [int, str, str]
 
-        data = {
-            'car': {
-                'id': 1,
-                'features' : {
-                    'brand': 'Ferrari',
-                    'model': '812 Superfast',
-                }
-            }
-        }
+    #     data = {
+    #         'car': {
+    #             'id': 1,
+    #             'features' : {
+    #                 'brand': 'Ferrari',
+    #                 'model': '812 Superfast',
+    #             }
+    #         }
+    #     }
 
-        expected = {
-            'car.id': 1,
-            'car.features.brand': 'Ferrari',
-            'car.features.model': '812 Superfast'
-        }
+    #     expected = {
+    #         'car.id': 1,
+    #         'car.features.brand': 'Ferrari',
+    #         'car.features.model': '812 Superfast'
+    #     }
 
 
-        return self.assertEqual()
+    #     return self.assertEqual()
