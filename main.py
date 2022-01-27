@@ -8,6 +8,7 @@ import sqlite3
 from tdd_stage.app.engine.python.mining.collier import collier
 from tdd_stage.app.engine.python.mining.preen import unfold_jsonb
 from tdd_stage.app.engine.python.targeting.selector import ElementsSelector
+from tdd_stage.app.engine.python.crutches.auxiliars import get_pipeline_confs
 
 
 
@@ -25,30 +26,17 @@ cur = con.cursor()
 # con.commit()
 
 # Read the WAL records
-with open("./wal.json", "r") as f:
+with open("./data/1_raw_zone/wal.json", "r") as f:
     records = json.loads(f.read())
 
 # Variables
-
-dims = 4
-
-map = {
-    'event_v2_data': 0,
-    'transaction': 1,
-    'transaction_request': 2,
-    'payment_instrument_token_data': 3
-}
-pin_points = [['change', 'table'], ['change', 'columnvalues'], ['change', 'columntypes'], ['change', 'columnnames']]
-schema, elements, vals = collier(records, dims, map, pin_points)
-key_cols = {
-    'event_v2_data': ['event_id', 'flow_id', 'transaction_id', 'transaction_lifecycle_event', 'created_at', 'error_details'],
-    'transaction': ['transaction_type', 'transaction_id', 'processor_merchant_account_id', 'amount', 'currency_code'],
-    'transaction_request': ['flow_id', 'vault_options', 'token_id'],
-    'payment_instrument_token_data': ['token_id', 'payment_instrument_type', 'vault_data', 'three_d_security_authentication']
-}
+map, pin_points, key_cols = get_pipeline_confs()
+schema, elements, vals = collier(records, len(map), map, pin_points)
 tables = list(map.keys())
-
 el_select = ElementsSelector(schema, elements, vals, key_cols, list(tables))
 
+pdb.set_trace()
+
 schema, columns, values = unfold_jsonb(el_select.schema[0], el_select.elements[0], el_select.vals[0])
+
 pdb.set_trace()

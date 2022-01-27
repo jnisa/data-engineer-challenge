@@ -1,6 +1,7 @@
 
 
 import json
+import pdb
 
 
 def clean_up(vals: list, del_pos: list):
@@ -36,13 +37,13 @@ def first_ele(lst: list, ref):
     gets the first value that is different from the reference value
 
     :param lst: list that will be analyzed
-    :param ref: reference value that will serve the comparison
+    :param ref: reference value that will serve the comparison process
     '''
 
     for i in lst:
         if i != ref:
             val = i
-        break
+            break
 
     return val
 
@@ -73,3 +74,19 @@ def map_postsql_dtypes(types_lst: list):
         postsql_dtypes = json.loads(f.read())
 
     return [postsql_dtypes[t] for t in types_lst]
+
+
+def get_pipeline_confs():
+
+    '''
+    extracts the configurations needed from the data pipeline
+    '''
+
+    with open('./configs/pipeline_config.json', 'r') as f:
+        confs = json.loads(f.read())
+
+    assets_map = confs['assets_map']
+    data_nav = confs['data_navigator']
+    key_cols = confs['key_columns']
+
+    return assets_map, data_nav, key_cols

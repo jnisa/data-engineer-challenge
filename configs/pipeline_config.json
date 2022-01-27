@@ -1,0 +1,42 @@
+{
+    "assets_map": {
+        "event_v2_data": 0,
+        "transaction": 1,
+        "transaction_request": 2,
+        "payment_instrument_token_data": 3
+    },
+    "data_navigator": [
+        ["change", "table"], 
+        ["change", "columnvalues"], 
+        ["change", "columntypes"], 
+        ["change", "columnnames"]
+    ],
+    "key_columns": {
+        "event_v2_data": [
+            "event_id", 
+            "flow_id", 
+            "transaction_id", 
+            "transaction_lifecycle_event", 
+            "created_at", 
+            "error_details"
+        ],
+        "transaction": [
+            "transaction_type", 
+            "transaction_id", 
+            "processor_merchant_account_id", 
+            "amount", 
+            "currency_code"
+        ],
+        "trasaction_request": [
+            "flow_id", 
+            "vault_options", 
+            "token_id"
+        ],
+        "payment_instrument_token_data": [
+            "token_id", 
+            "payment_instrument_type", 
+            "vault_data", 
+            "three_d_security_authentication"
+        ]
+    }
+}

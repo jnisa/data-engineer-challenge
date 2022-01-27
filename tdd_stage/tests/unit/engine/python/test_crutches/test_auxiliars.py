@@ -1,7 +1,9 @@
 
 
+
 import unittest
 from tdd_stage.app.engine.python.crutches.auxiliars import clean_up
+from tdd_stage.app.engine.python.crutches.auxiliars import first_ele
 from tdd_stage.app.engine.python.crutches.auxiliars import nested_levls_counter
 
 
@@ -36,3 +38,18 @@ class TestAuxiliars(unittest.TestCase):
         result = nested_levls_counter(raw_lst)
 
         self.assertEqual(result, expected)
+
+
+    def test_first_ele_tc1(self):
+
+        '''
+        first_ele - 1st Test Case Scenario
+        Complexity: 1/4
+        '''
+
+        data = [1, 1, 1, 'abc', 1, 'def']
+
+        expected = 'abc'
+        result = first_ele(data, 1)
+
+        return self.assertEqual(result, expected)
