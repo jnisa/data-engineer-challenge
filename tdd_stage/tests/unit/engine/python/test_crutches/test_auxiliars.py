@@ -53,3 +53,4 @@ class TestAuxiliars(unittest.TestCase):
         result = first_ele(data, 1)
 
         return self.assertEqual(result, expected)
+
