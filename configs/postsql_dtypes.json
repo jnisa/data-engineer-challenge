@@ -1,0 +1,18 @@
+{
+    "smallint": "integer",
+    "bigint": "integer",
+    "bit": "integer",
+    "integer": "integer",
+    "double precision": "real",
+    "real": "real",
+    "decimal": "real",
+    "numeric": "real",
+    "boolean": "boolean",
+    "date": "text",
+    "time": "text",
+    "timestamp": "text",
+    "text": "text",
+    "bytea": "blob",
+    "varchar": "text",
+    "char": "text"
+}

@@ -2,6 +2,9 @@
 
 import unittest
 from tdd_stage.app.engine.python.mining.preen import preen
+from tdd_stage.app.engine.python.mining.preen import new_els_gen
+from tdd_stage.app.engine.python.mining.preen import jsonb_conv
+from tdd_stage.app.engine.python.mining.preen import adapt_feature
 
 
 class TestPreen(unittest.TestCase):
@@ -78,34 +81,97 @@ class TestPreen(unittest.TestCase):
         return self.assertEqual(result, expected)
 
 
-    # def test_adapt_assets_tc1(self):
+    def test_new_els_gen_tc1(self):
 
-    #     '''
-    #     adapt_assets - 1st Test Case Scenario
-    #     Complexity: 1/4
-    #     '''
+        '''
+        new_els_gen - 1st Test Case Scenario
+        Complexity: 1/4
+        '''
 
-    #     elements = ['car']
-    #     expected_elements = ['car.id', 'car.features.brand', 'car.features.model']
+        parent = 'car'
+        subnodes = ['id', 'brand', 'model']
 
-    #     dtypes = ['jsonb']
-    #     expected_dtypes = [int, str, str]
+        result = new_els_gen(parent, subnodes)
+        expected = ['car.id', 'car.brand', 'car.model']
 
-    #     data = {
-    #         'car': {
-    #             'id': 1,
-    #             'features' : {
-    #                 'brand': 'Ferrari',
-    #                 'model': '812 Superfast',
-    #             }
-    #         }
-    #     }
-
-    #     expected = {
-    #         'car.id': 1,
-    #         'car.features.brand': 'Ferrari',
-    #         'car.features.model': '812 Superfast'
-    #     }
+        return self.assertEqual(result, expected)
 
 
-    #     return self.assertEqual()
+    def test_jsonb_conv_tc1(self):
+
+        '''
+        jsonb_conv - 1st Test Case Scenario
+        Complexity: 1/4
+        '''
+
+        jsonb_idx = 3
+
+        data = [
+            'feature_1',
+            'feature_2',
+            'feature_3',
+            '{"car_id": 1, "car_brand": "Ferrari", "car_model": null, "car_horse_power": "1000cv", "car_value": null}'
+        ]
+
+        expected = {
+            'car_id': 1,
+            'car_brand': 'Ferrari',
+            'car_model': None,
+            'car_horse_power': '1000cv',
+            'car_value': None
+        }
+
+        result = jsonb_conv(data, jsonb_idx)
+
+        return self.assertEqual(result, expected)
+
+
+    def test_adapt_feature_tc1(self):
+
+        '''
+        adapt_feature - 1st Test Case Scenario
+        Complexity: 1/4
+        '''
+
+        idx = 3
+        init_data = ['Ferrari', 'F8 Spider', '500k', '1000']
+        new_data = ['2018', '3.5s', 'Italian']
+
+        expected = ['Ferrari', 'F8 Spider', '500k', '2018', '3.5s', 'Italian']
+        result = adapt_feature(init_data, new_data, idx)
+
+        return self.assertEqual(result, expected)
+
+
+    def test_adapt_feature_tc2(self):
+
+        '''
+        adapt_feature - 2nd Test Case Scenario
+        Complexity: 1/4
+        '''
+
+        idx = 2
+        init_data = ['Ferrari', 'F8 Spider', '500k', '1000']
+        new_data = ['2018', '3.5s', 'Italian']
+
+        expected = ['Ferrari', 'F8 Spider', '2018', '3.5s', 'Italian', '1000']
+        result = adapt_feature(init_data, new_data, idx)
+
+        return self.assertEqual(result, expected)
+
+
+    def test_adapt_feature_tc3(self):
+
+        '''
+        adapt_feature - 3rd Test Case Scenario
+        Complexity: 1/4
+        '''
+
+        idx = 0
+        init_data = ['Ferrari', 'F8 Spider', '500k', '1000']
+        new_data = ['2018', '3.5s', 'Italian']
+
+        expected = ['2018', '3.5s', 'Italian', 'F8 Spider', '500k', '1000']
+        result = adapt_feature(init_data, new_data, idx)
+
+        return self.assertEqual(result, expected)

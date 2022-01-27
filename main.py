@@ -50,5 +50,5 @@ tables = list(map.keys())
 
 el_select = ElementsSelector(schema, elements, vals, key_cols, list(tables))
 
-values, columns = unfold_jsonb(el_select.schema[0], el_select.elements[0], el_select.vals[0])
+schema, columns, values = unfold_jsonb(el_select.schema[0], el_select.elements[0], el_select.vals[0])
 pdb.set_trace()

@@ -1,0 +1,7 @@
+{
+    "int": "integer",
+    "float": "real",
+    "str": "text",
+    "bytes": "blob",
+    "NoneType": "null"
+}

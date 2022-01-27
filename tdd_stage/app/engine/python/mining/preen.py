@@ -1,10 +1,10 @@
 
 
-import pdb
+
 from collections import MutableMapping
-from sqlite3.dbapi2 import adapt
 
 from tdd_stage.app.engine.python.crutches.auxiliars import first_ele
+from tdd_stage.app.engine.python.crutches.auxiliars import map_python_dtypes
 
 
 def preen(d: dict, parent_key = '', sep = '.'):
@@ -41,36 +41,6 @@ def new_els_gen(parent: str, subels: list):
     return [parent + "." + s for s in subels]
 
 
-def unfold_jsonb(sch: list, cols: list, vals: list):
-
-    '''
-    targets the jsonb data types on the data and unfolds them in case 
-    of a nested dictionary 
-    
-    :param sch: variable/list that handles the schema
-    :param cols: variable/list that handles all the columns from the data
-    :param vals: variable/list that handles all the data values
-    '''
-
-    jsonb_idx = sch.index('jsonb')
-
-    conv_values = [jsonb_conv(val, jsonb_idx) for val in vals]
-    
-    get_elements = lambda x: list(x.keys()) if x != None else (None)
-    new_elements = first_ele([get_elements(val) for val in conv_values], None)
-    
-    get_values = lambda x: list(x.values()) if x != None else ([None] * len(new_elements))
-    new_vals = [get_values(val) for val in conv_values]
-
-    elements = adapt_feature(cols, new_els_gen(cols[jsonb_idx], new_elements), jsonb_idx)
-    #schema = adapt_feature(sch, map_dtypes('primeiro record diferente de lista none'), jsonb_idx)    
-    vals = [adapt_feature(vals[i], new_vals[i], jsonb_idx) for i in range(len(vals))]
-
-    pdb.set_trace()
-
-    return elements, vals
-
-
 def jsonb_conv(values: list, idx: int):
 
     '''
@@ -95,22 +65,36 @@ def adapt_feature(old_vals: list, new_vals: list, idx: int):
     :param idx: index of where must occur the adaptation
     '''
 
-    del old_vals[idx]
-
-    for id, val in enumerate(new_vals):
-        old_vals.insert(idx + id, val)
-
-    return old_vals
+    return old_vals[0:idx] + new_vals + old_vals[idx + 1::]
 
 
-def map_dtypes(dtypes_lst: list):
+def unfold_jsonb(sch: list, cols: list, vals: list):
 
     '''
-    establishes a parallel between python and sqlite datatypes
+    targets the jsonb data types on the data and unfolds them in case 
+    of a nested dictionary 
     
-    :param dtypes_lst: list of the python data types to be converted
+    :param sch: variable/list that handles the schema
+    :param cols: variable/list that handles all the columns from the data
+    :param vals: variable/list that handles all the data values
     '''
 
-    return None
+    jsonb_idx = sch.index('jsonb')
+
+    conv_values = [jsonb_conv(val, jsonb_idx) for val in vals]
+    
+    get_elements = lambda x: list(x.keys()) if x != None else (None)
+    new_elements = first_ele([get_elements(val) for val in conv_values], None)
+    
+    get_values = lambda x: list(x.values()) if x != None else ([None] * len(new_elements))
+    new_values = [get_values(val) for val in conv_values]
+
+    elements = adapt_feature(cols, new_els_gen(cols[jsonb_idx], new_elements), jsonb_idx)
+    schema = adapt_feature(sch, map_python_dtypes(first_ele(new_values, None)), jsonb_idx)    
+    vals = [adapt_feature(vals[i], new_values[i], jsonb_idx) for i in range(len(vals))]
+
+    return schema, elements, vals
+
+
 
 

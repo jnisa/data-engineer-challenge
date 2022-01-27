@@ -121,3 +121,14 @@ payment_instrument_token_data
   DEFINIR LAYERS DE UM DATA WAREHOUSE -> PREVENIR TER QUE REPROCESSAR TUDO
   ELIMINAR COLUNAS FIRST LEVEL -> DESDOBRAR NESTED DICTS -> ELIMINAR COLUNAS SECOND LEVEL
   JSONB TO DICT PYTHON
+
+  Data Types:
+
+    . 'uuid', 
+    . 'transaction_lifecycle_event_type', 
+    . 'timestamp without time zone',  
+    . 'transaction_type', 
+    . 'integer', 
+    . 'character(3)'
+    . 'character varying(36)'
+    . 'character varying(255)'

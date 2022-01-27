@@ -1,5 +1,7 @@
 
 
+import json
+
 
 def clean_up(vals: list, del_pos: list):
 
@@ -44,3 +46,30 @@ def first_ele(lst: list, ref):
 
     return val
 
+
+def map_python_dtypes(vals_lst: list):
+
+    '''
+    establishes a parallel between python and sqlite datatypes
+    
+    :param dtypes_lst: list of values from where data types will be determined
+    '''
+
+    with open('./configs/python_dtypes.json', 'r') as f:
+        py_dtypes = json.loads(f.read())  
+
+    return [py_dtypes[type(v).__name__] for v in vals_lst]
+
+
+def map_postsql_dtypes(types_lst: list):
+
+    '''
+    establishes a parallel between postgres and sqlite datatypes
+
+    :param types_lst: list of postgresql data types to be converted
+    '''
+
+    with open('./config/postsql_dtypes.json') as f:
+        postsql_dtypes = json.loads(f.read())
+
+    return [postsql_dtypes[t] for t in types_lst]
