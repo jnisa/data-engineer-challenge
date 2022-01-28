@@ -1,6 +1,6 @@
 
 
-
+import pdb
 from collections import MutableMapping
 
 from tdd_stage.app.engine.python.crutches.auxiliars import first_ele
@@ -79,6 +79,8 @@ def unfold_jsonb(sch: list, cols: list, vals: list):
     :param vals: variable/list that handles all the data values
     '''
 
+    pdb.set_trace()
+
     jsonb_idx = sch.index('jsonb')
 
     conv_values = [jsonb_conv(val, jsonb_idx) for val in vals]
@@ -92,6 +94,8 @@ def unfold_jsonb(sch: list, cols: list, vals: list):
     elements = adapt_feature(cols, new_els_gen(cols[jsonb_idx], new_elements), jsonb_idx)
     schema = adapt_feature(sch, map_python_dtypes(first_ele(new_values, None)), jsonb_idx)    
     vals = [adapt_feature(vals[i], new_values[i], jsonb_idx) for i in range(len(vals))]
+
+    pdb.set_trace()
 
     return schema, elements, vals
 

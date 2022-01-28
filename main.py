@@ -34,9 +34,7 @@ map, pin_points, key_cols = get_pipeline_confs()
 schema, elements, vals = collier(records, len(map), map, pin_points)
 tables = list(map.keys())
 el_select = ElementsSelector(schema, elements, vals, key_cols, list(tables))
-
-pdb.set_trace()
-
 schema, columns, values = unfold_jsonb(el_select.schema[0], el_select.elements[0], el_select.vals[0])
 
-pdb.set_trace()
+
+# create the tables needed

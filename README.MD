@@ -28,7 +28,7 @@ Configuration files that possess data relevant to the pipeline built. We are tal
 2. `/data`
 A folder that tries to be a local emulation of a data lake's organization. Adapted to the dimension of this challenge, this folder possesses 3 layers/zones:
 
->> `/raw_zone`: this zone is where the data provided to address this challenge (the JSON file that contains the 4 data assets already mentioned) is located. This data was not yet submitted to any modification or transformation, so we can look at it as being the "raw material";
+>> `/raw_zone`: this zone is where the data provided to address this challenge (the JSON file that contains the 4 data assets already mentioned - `wal.json`) is located. This data was not yet submitted to any modification or transformation, so we can look at it as being the "raw material";
 
 >> `/curated_zone`: is the zone where the data assets will be placed after being submitted to all the required transformations. So it is clear that this zone will have 4 files corresponding to the 4 data assets that this code challenge aims for. These 4 dimensions will then be replicated on our serverless database;
 
