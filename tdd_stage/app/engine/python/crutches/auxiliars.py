@@ -3,6 +3,7 @@
 import json
 
 
+
 def clean_up(vals: list, del_pos: list):
 
     '''
@@ -39,6 +40,7 @@ def first_ele(lst: list, ref):
     :param ref: reference value that will serve the comparison process
     '''
 
+    val = ref
     for i in lst:
         if i != ref:
             val = i
@@ -69,7 +71,7 @@ def map_postsql_dtypes(types_lst: list):
     :param types_lst: list of postgresql data types to be converted
     '''
 
-    with open('./config/postsql_dtypes.json') as f:
+    with open('./configs/postsql_dtypes.json') as f:
         postsql_dtypes = json.loads(f.read())
 
     return [postsql_dtypes[t] for t in types_lst]
@@ -89,3 +91,23 @@ def get_pipeline_confs():
     key_cols = confs['key_columns']
 
     return assets_map, data_nav, key_cols
+
+
+def check_outliers(ref_val, vals_set: list, idx: int):
+
+    '''
+    check if there is numbers different from the reference provided
+
+    :param ref_val: reference value provided
+    :param vals_set: set values that will be analyzed
+    :param idx: specific positions to compare within the set of values
+    '''
+
+    has_outlier = False
+
+    for val in vals_set:
+        if val[idx] != ref_val:
+            has_outlier = True
+            break
+
+    return has_outlier

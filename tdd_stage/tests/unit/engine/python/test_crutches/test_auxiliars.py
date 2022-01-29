@@ -4,6 +4,7 @@
 import unittest
 from tdd_stage.app.engine.python.crutches.auxiliars import clean_up
 from tdd_stage.app.engine.python.crutches.auxiliars import first_ele
+from tdd_stage.app.engine.python.crutches.auxiliars import check_outliers
 from tdd_stage.app.engine.python.crutches.auxiliars import nested_levls_counter
 
 
@@ -51,6 +52,66 @@ class TestAuxiliars(unittest.TestCase):
 
         expected = 'abc'
         result = first_ele(data, 1)
+
+        return self.assertEqual(result, expected)
+
+
+    def test_check_outliers_tc1(self):
+
+        '''
+        check_outliers - 1st Test Case Scenario
+        Complexity: 1/4
+        '''
+
+        data = [
+            [1, None],
+            [2, None],
+            [3, 1],
+            [4, None],
+        ]
+
+        result = check_outliers(None, data, 1)
+        expected = True
+
+        return self.assertEqual(result, expected)
+
+
+    def test_check_outliers_tc2(self):
+
+        '''
+        check_outliers - 2nd Test Case Scenario
+        Complexity: 1/4
+        '''
+
+        data = [
+            [1, None],
+            [2, None],
+            [3, None],
+            [4, None],
+        ]
+
+        result = check_outliers(None, data, 1)
+        expected = False
+
+        return self.assertEqual(result, expected)
+
+
+    def test_check_outliers_tc3(self):
+
+        '''
+        check_outliers - 3rd Test Case Scenario
+        Complexity: 1/4
+        '''
+
+        data = [
+            [1, 'abc'],
+            [2, 1],
+            [3, 2],
+            [4, 'abc'],
+        ]
+
+        result = check_outliers('abc', data, 1)
+        expected = True
 
         return self.assertEqual(result, expected)
 

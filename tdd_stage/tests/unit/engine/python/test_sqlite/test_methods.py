@@ -41,7 +41,7 @@ class TestSQLiteMethods(unittest.TestCase):
         cols_set = ['column_1', 'column_2', 'column_3', 'column_4']
         dtypes_set = ['str', 'int', 'bool', 'str']
 
-        expected = "CREATE A TABLE IF NOT EXISTS test_table_1 (column_1 str, column_2 int, column_3 bool, column_4 str)"
+        expected = "CREATE TABLE IF NOT EXISTS test_table_1 (column_1 str, column_2 int, column_3 bool, column_4 str)"
         result = create_table(table_id, cols_set, dtypes_set)
 
         return self.assertEqual(result, expected)
@@ -74,3 +74,4 @@ class TestSQLiteMethods(unittest.TestCase):
         expected = "CREATE TABLE new_table_1 AS SELECT * FROM table1 LEFT JOIN table2 ON table1.id = table2.id"
 
         return self.assertEqual(result, expected)
+

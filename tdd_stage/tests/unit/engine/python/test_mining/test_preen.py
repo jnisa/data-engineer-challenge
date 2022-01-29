@@ -92,7 +92,7 @@ class TestPreen(unittest.TestCase):
         subnodes = ['id', 'brand', 'model']
 
         result = new_els_gen(parent, subnodes)
-        expected = ['car.id', 'car.brand', 'car.model']
+        expected = ['car_id', 'car_brand', 'car_model']
 
         return self.assertEqual(result, expected)
 

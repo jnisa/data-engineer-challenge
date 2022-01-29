@@ -30,7 +30,7 @@ def create_table(table_id: str, cols_set: list, dtypes: list):
     '''
 
     struct = ["%s %s" %(cols_set[i], dtypes[i]) for i in range(len(cols_set))]
-    query = "CREATE A TABLE IF NOT EXISTS %s %s" %(table_id, str(tuple(struct)))
+    query = "CREATE TABLE IF NOT EXISTS %s %s" %(table_id, str(tuple(struct)))
 
     return query.replace("'","")
 

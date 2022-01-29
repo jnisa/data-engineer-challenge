@@ -1,9 +1,10 @@
 
 
-import pdb
+
 from collections import MutableMapping
 
 from tdd_stage.app.engine.python.crutches.auxiliars import first_ele
+from tdd_stage.app.engine.python.crutches.auxiliars import check_outliers
 from tdd_stage.app.engine.python.crutches.auxiliars import map_python_dtypes
 
 
@@ -38,7 +39,7 @@ def new_els_gen(parent: str, subels: list):
     :param subels: subelements resultant from the division
     '''
 
-    return [parent + "." + s for s in subels]
+    return [parent + "_" + s for s in subels]
 
 
 def jsonb_conv(values: list, idx: int):
@@ -79,25 +80,23 @@ def unfold_jsonb(sch: list, cols: list, vals: list):
     :param vals: variable/list that handles all the data values
     '''
 
-    pdb.set_trace()
+    if 'jsonb' in sch:
+        if check_outliers(None, vals, sch.index('jsonb')):
+            jsonb_idx = sch.index('jsonb')
 
-    jsonb_idx = sch.index('jsonb')
+            conv_values = [jsonb_conv(val, jsonb_idx) for val in vals]
+            
+            get_elements = lambda x: list(x.keys()) if x != None else (None)
+            new_elements = first_ele([get_elements(val) for val in conv_values], None)
+            
+            get_values = lambda x: list(x.values()) if x != None else ([None] * len(new_elements))
+            new_values = [get_values(val) for val in conv_values]
 
-    conv_values = [jsonb_conv(val, jsonb_idx) for val in vals]
-    
-    get_elements = lambda x: list(x.keys()) if x != None else (None)
-    new_elements = first_ele([get_elements(val) for val in conv_values], None)
-    
-    get_values = lambda x: list(x.values()) if x != None else ([None] * len(new_elements))
-    new_values = [get_values(val) for val in conv_values]
+            cols = adapt_feature(cols, new_els_gen(cols[jsonb_idx], new_elements), jsonb_idx)
+            sch = adapt_feature(sch, map_python_dtypes(first_ele(new_values, None)), jsonb_idx)   
+            vals = [adapt_feature(vals[i], new_values[i], jsonb_idx) for i in range(len(vals))]
 
-    elements = adapt_feature(cols, new_els_gen(cols[jsonb_idx], new_elements), jsonb_idx)
-    schema = adapt_feature(sch, map_python_dtypes(first_ele(new_values, None)), jsonb_idx)    
-    vals = [adapt_feature(vals[i], new_values[i], jsonb_idx) for i in range(len(vals))]
-
-    pdb.set_trace()
-
-    return schema, elements, vals
+    return sch, cols, vals
 
 
 

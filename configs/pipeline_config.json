@@ -27,7 +27,7 @@
             "amount", 
             "currency_code"
         ],
-        "trasaction_request": [
+        "transaction_request": [
             "flow_id", 
             "vault_options", 
             "token_id"

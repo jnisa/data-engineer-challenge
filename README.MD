@@ -17,7 +17,7 @@ In this particular challenge, it is intended that the candidate must be responsi
 
 To get to the expected outcome, the development of the solution was divided into the following modules:
 
-# **PUT AN IMAGE HERE!**
+![alt text for the image](images/approach.png "Approach Definition")
 
 ## **2. Project Tree**
 The solution presented in this repository is divided into the following modules:
@@ -44,7 +44,7 @@ Images used on the documentation of this solution are saved in this folder;
 Where all the development was settled. TDD (Test Driven Development) practises were followed along the development stage, so we can look at this folder as the working area where all the methods and classes were not only developed, but tested.
 
 ## **3. TDD Pipeline**
-
+![alt text for the image](images/tdd.png "TDD Pipeline")
 
 ## **4. Data Assets**
 
