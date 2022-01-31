@@ -7,7 +7,6 @@ def data_prep(vals_set: list):
     prepares data before making the insert into a new dimension
 
     :param vals_set: set of values that are about to be reshaped
-    :param cols_set: set of column that will indicate the number of divisions
     '''
 
     vals_struct = [[] for _ in range(len(vals_set[0]))]

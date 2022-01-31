@@ -71,6 +71,8 @@ def preen(d: dict, parent_key = '', sep = '.'):
     preens python nested python dictionaries to erase existent nested levels 
 
     :param d: nested dictionary that is about to be unfolded
+    :param parent_key: corresponds to the name of dimensions
+    :param sep: separator that stays in between the dimension and the column name
     '''
 
     items = []

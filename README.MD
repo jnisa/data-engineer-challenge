@@ -23,7 +23,7 @@ To get to the expected outcome, the development of the solution was divided into
 The solution presented in this repository is divided into the following modules:
 
 1. `/configs`
-Configuration files that possess data relevant to the pipeline built. We are talking about files that establish a correspondence between data types (from Python or Postgres to SQLite) and also universal variables with whom the pipeline developed governs.
+Configuration files that possess specifications relevant to the pipeline built. We are talking about files that establish a correspondence between data types (from Python or Postgres to SQLite) and also universal variables with whom the pipeline governs.
 
 2. `/data`
 A folder that tries to be a local emulation of a data lake's organization. Adapted to the dimension of this challenge, this folder possesses 3 layers/zones:
@@ -41,18 +41,18 @@ Where the .md file that handles the presentation of the challenge is kept;
 Images used on the documentation of this solution are saved in this folder;
 
 5. `tdd_stage`
-Where all the development was settled. TDD (Test Driven Development) practises were followed along the development stage, so we can look at this folder as the working area where all the methods and classes were not only developed, but tested.
+Where all the development was settled. TDD (*Test Driven Development*) practises were followed along the development stage, so we can look at this folder as the working area where all the methods and classes were not only developed, but tested.
 
 ## **3. TDD Pipeline**
 In order to optimize the development process, guarantee the quality of the code produced, and avoid bugs, we have followed the principles of TDD (*Test Driven Development*).
 
-This way, we spend most of the time developing modules of the solution (which can be quite time consuming), however, at the same time, we are assuring ourselves that at the production stage, after joining all the modules together, the probability of having errors or unexpected use cases is mitigated.
+This way, we spend most of the time developing modules of the solution (which can be quite time consuming), however, at the same time, we are assuring ourselves that at the production stage, after joining all the modules together, the probability of having problems or unexpected use cases is mitigated.
 
 TDD bears its fundamentals in very simple principles and the next image tries to highlight them:
 
 ![alt text for the image](images/tdd.png "TDD Pipeline")
 
-So the idea behind this concept is to before starting the development of a certain method or function, create test cases scenarios where the function must be capable of responding as expected. After the settlement of the test cases, we should then start the development stage. In case of failure on the set of tests, we must perform the refactoring of the code. It's also important to mention that **every function must be tested in more than on unitary tests**, with multiple complexity levels, and in different scenarios.
+So the idea behind this concept is to before starting the development of a certain method or function, create test cases scenarios where the function must be capable of responding as expected. After the settlement of the test cases, we should then start the development stage. In case of failure on the set of tests, we must perform the refactoring of the code. It's also important to mention that **every function must be tested in more than on unitary test**, with multiple complexity levels, and in different scenarios.
 
 ## **4. Data Assets**
 
@@ -141,7 +141,7 @@ Absent from the previous picture is the Loading stage, which is accomplished by 
 A plausible production scenario for the challenge in question could be something like:
 
 ![alt text for the image](images/prod.jpeg "Production instantiation")
-##### *Note:* we would cloud infrastructure automation tool like CloudFormation instantiating, this way, IaC (Infrastructure as Code) practises.
+##### *Note:* we would use a cloud infrastructure automation tool like CloudFormation instantiating, this way, IaC (Infrastructure as Code) practises.
 
 Multiple cloud streaming services to ease the capture and processing of the data. Transformations made by the Kinesis Streams Firehose, that handle ETL operations. 
 
@@ -176,6 +176,13 @@ sqlite> SELECT COUNT(*) FROM expected_dim;
 ## **B. Improvement Points**
 Besides the fact that the developed pipeline can return the expected results, there are a couple of improvements that can be taken into consideration:
 
-1. the TDD pipeline **should contemplate more test case scenarios** and with other levels of complexity and **also exceptions tests** (*i.e.*, a method that expected a list to be provided being tests against an output that does not possess a list;
+1. the TDD pipeline **should contemplate more test case scenarios** and with other levels of complexity and **also exceptions tests** (*i.e.*, a method that expects a list to be provided being tested against an input that does not possess a list);
 2. there are **code optimizations** that could have been explored;
-3. the `sqlite client` should be **capable of extracting the data** to the different data layers in an automatic manner.
+3. the `sqlite client` should be also **capable of extracting the data** to the different data layers in an automatic manner.
+
+
+---
+
+`Author`: João Nisa
+
+`Last Updated`: 31 of January, 2022

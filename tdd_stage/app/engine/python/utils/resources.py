@@ -54,7 +54,7 @@ def map_python_dtypes(vals_lst: list):
     '''
     establishes a parallel between python and sqlite datatypes
     
-    :param dtypes_lst: list of values from where data types will be determined
+    :param vals_lst: list of values from where data types will be determined
     '''
 
     with open('./configs/python_dtypes.json', 'r') as f:
