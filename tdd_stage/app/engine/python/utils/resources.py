@@ -89,8 +89,9 @@ def get_pipeline_confs():
     assets_map = confs['assets_map']
     data_nav = confs['data_navigator']
     key_cols = confs['key_columns']
+    out_cols = confs['output_cols']
 
-    return assets_map, data_nav, key_cols
+    return assets_map, data_nav, key_cols, out_cols
 
 
 def check_outliers(ref_val, vals_set: list, idx: int):

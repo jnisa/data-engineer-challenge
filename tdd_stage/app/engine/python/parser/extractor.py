@@ -1,11 +1,68 @@
 
 
 
+from collections import Iterable
 from collections import MutableMapping
 
-from tdd_stage.app.engine.python.crutches.auxiliars import first_ele
-from tdd_stage.app.engine.python.crutches.auxiliars import check_outliers
-from tdd_stage.app.engine.python.crutches.auxiliars import map_python_dtypes
+from tdd_stage.app.engine.python.utils.resources import first_ele
+from tdd_stage.app.engine.python.utils.resources import check_outliers
+from tdd_stage.app.engine.python.utils.resources import map_python_dtypes
+
+
+
+def circumvent(data: dict, keys=None):
+    
+    '''
+    dribbler that retrieves elements from a nested dictionary
+
+    :param data: playground for the dribbler
+    :param keys: pin points that the dribbler must follow
+    '''
+    
+    result = []
+    
+    if isinstance(data, dict):
+        if keys is None:
+            data = data.values()
+        else:
+            data = dict(filter(lambda t: t[0] in keys, data.items())).values()
+    
+    for el in data:
+        if isinstance(el, Iterable) and not isinstance(el, str):
+            result.extend(circumvent(el, keys))
+        else:
+            result.append(el)
+    
+    return result
+
+
+def collier(raw_data: dict, dims: int, map: dict, keys: list):
+
+    '''
+    gets all the needed assets from the json file
+    returns lists with the data types, columns, records values, and dims name
+
+    :param raw_data: data from the initial json
+    :param dims: data dimensions
+    :param map: position of each data asset 
+    :param keys: pin points to navigate in the nested dictionary
+    '''
+
+    values = [[] for _ in range(dims)]
+    dtypes = [None for _ in range(dims)]
+    columns = [None for _ in range(dims)]
+
+    for r in raw_data:
+        
+        idx = map[circumvent(r, keys[0])[0]]
+        values[idx].append(circumvent(r, keys[1]))
+
+        if (None in dtypes or dtypes[idx] == None):
+
+            dtypes[idx] = circumvent(r, keys[2])
+            columns[idx] = circumvent(r, keys[3])
+
+    return dtypes, columns, values
 
 
 def preen(d: dict, parent_key = '', sep = '.'):
@@ -92,7 +149,8 @@ def unfold_jsonb(sch: list, cols: list, vals: list):
             get_values = lambda x: list(x.values()) if x != None else ([None] * len(new_elements))
             new_values = [get_values(val) for val in conv_values]
 
-            cols = adapt_feature(cols, new_els_gen(cols[jsonb_idx], new_elements), jsonb_idx)
+            #cols = adapt_feature(cols, new_els_gen(cols[jsonb_idx], new_elements), jsonb_idx)
+            cols = adapt_feature(cols, new_elements, jsonb_idx)
             sch = adapt_feature(sch, map_python_dtypes(first_ele(new_values, None)), jsonb_idx)   
             vals = [adapt_feature(vals[i], new_values[i], jsonb_idx) for i in range(len(vals))]
 

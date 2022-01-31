@@ -1,8 +1,8 @@
 
 
 
-from tdd_stage.app.engine.python.crutches.auxiliars import clean_up
-from tdd_stage.app.engine.python.crutches.auxiliars import nested_levls_counter
+from tdd_stage.app.engine.python.utils.resources import clean_up
+from tdd_stage.app.engine.python.utils.resources import nested_levls_counter
 
 
 class ElementsSelector:

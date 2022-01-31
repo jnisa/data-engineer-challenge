@@ -1,7 +1,7 @@
 
 
 import unittest
-from tdd_stage.app.engine.python.targeting.selector import ElementsSelector
+from tdd_stage.app.engine.python.parser.selector import ElementsSelector
 
 
 class TestElementsSelector(unittest.TestCase):

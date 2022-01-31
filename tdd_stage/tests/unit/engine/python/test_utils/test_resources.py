@@ -2,10 +2,10 @@
 
 
 import unittest
-from tdd_stage.app.engine.python.crutches.auxiliars import clean_up
-from tdd_stage.app.engine.python.crutches.auxiliars import first_ele
-from tdd_stage.app.engine.python.crutches.auxiliars import check_outliers
-from tdd_stage.app.engine.python.crutches.auxiliars import nested_levls_counter
+from tdd_stage.app.engine.python.utils.resources import clean_up
+from tdd_stage.app.engine.python.utils.resources import first_ele
+from tdd_stage.app.engine.python.utils.resources import check_outliers
+from tdd_stage.app.engine.python.utils.resources import nested_levls_counter
 
 
 class TestAuxiliars(unittest.TestCase):

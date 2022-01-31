@@ -1,13 +1,83 @@
 
 
 import unittest
-from tdd_stage.app.engine.python.mining.preen import preen
-from tdd_stage.app.engine.python.mining.preen import new_els_gen
-from tdd_stage.app.engine.python.mining.preen import jsonb_conv
-from tdd_stage.app.engine.python.mining.preen import adapt_feature
+from tdd_stage.app.engine.python.parser.extractor import preen
+from tdd_stage.app.engine.python.parser.extractor import collier
+from tdd_stage.app.engine.python.parser.extractor import jsonb_conv
+from tdd_stage.app.engine.python.parser.extractor import circumvent
+from tdd_stage.app.engine.python.parser.extractor import new_els_gen
+from tdd_stage.app.engine.python.parser.extractor import adapt_feature
 
 
-class TestPreen(unittest.TestCase):
+class TestExtractor(unittest.TestCase):
+
+    def test_circumvent_tc1(self):
+
+        '''
+        circumvent - 1st Test Case Scenario
+        Complexity: 1/4
+        '''
+
+        data = {'a': 42, 'c': 12, 'b': [{1: 2, 2: 3, 3: 4}]}
+
+        result = circumvent(data, ['a', 'b', 1])
+        expected = [42, 2]
+
+        return self.assertEqual(result, expected)
+
+
+    def test_collier_tc1(self):
+
+        '''
+        collier - 1st Test Case Scenario
+        Complexity: 1/4
+        '''
+
+        map = {'transactions': 0}
+
+        path = [
+            ['payment', 'table'],
+            ['payment', 'column_values'],
+            ['payment', 'column_types'], 
+            ['payment', 'column_names']
+        ]
+
+        data = [ 
+        {
+            'payment': [
+            {
+                'table': 'transactions',
+                'type': 'credit card',
+                'column_names': ['purchase_location', 'bank_id', 'amount'],
+                'column_types': ['string', 'string', 'float'],
+                'column_values': ['Lisbon, Baixa-Chiado', 'CGD', '125.99']
+            }]
+        },
+        {
+            'payment': [
+            {
+                'table': 'transactions', 
+                'type': 'money',
+                'column_names': ['purchase_location', 'bank_id', 'amount'],
+                'column_types': ['string', 'string', 'float'],
+                'column_values': ['Lisbon, Telheiras', 'null', '12.5']
+            }]
+        }
+        ]
+
+        schema_exp = [['string', 'string', 'float']]
+        columns_exp = [['purchase_location', 'bank_id', 'amount']]
+        values_exp = [[
+            ['Lisbon, Baixa-Chiado', 'CGD', '125.99'],
+            ['Lisbon, Telheiras', 'null', '12.5']
+        ]]
+        expected = (schema_exp, columns_exp, values_exp)
+
+        schema_res, columns_res, values_res = collier(data, len(map), map, path)
+        result = (schema_res, columns_res, values_res)
+
+        self.assertEqual(result, expected)
+
 
     def test_preen_tc1(self):
 

@@ -79,3 +79,21 @@ def sql_join(tab1: str, tab2: str, c1: str, c2: str, join_type: str, new_table: 
 
     return query.replace("'", "")
 
+
+def drop_columns(table_id: str, select_cols: list, new_table: str):
+
+    '''
+    drop columns that are useless to the final answer
+
+    :param table_id: table that will be the center of this operation
+    :param select_cols: columns that must be kept
+    :param drop_cols: set of columns that will be dropped 
+    '''
+
+    query = "CREATE TABLE %s AS SELECT %s FROM %s" %(
+        new_table, 
+        ', '.join(select_cols), 
+        table_id
+    )
+
+    return query.replace("'", "")

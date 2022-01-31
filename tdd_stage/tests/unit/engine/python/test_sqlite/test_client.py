@@ -3,10 +3,11 @@
 
 import unittest
 
-from tdd_stage.app.engine.python.sqlite.methods import sql_join
-from tdd_stage.app.engine.python.sqlite.methods import data_load
-from tdd_stage.app.engine.python.sqlite.methods import data_prep
-from tdd_stage.app.engine.python.sqlite.methods import create_table
+from tdd_stage.app.engine.python.sqlite.client import sql_join
+from tdd_stage.app.engine.python.sqlite.client import data_load
+from tdd_stage.app.engine.python.sqlite.client import data_prep
+from tdd_stage.app.engine.python.sqlite.client import create_table
+from tdd_stage.app.engine.python.sqlite.client import drop_columns
 
 
 class TestSQLiteMethods(unittest.TestCase):
@@ -75,3 +76,19 @@ class TestSQLiteMethods(unittest.TestCase):
 
         return self.assertEqual(result, expected)
 
+
+    def test_drop_columns_tc1(self):
+
+        '''
+        drop_columns - 1st Test Case Scenario
+        Complexity: 1/4
+        '''
+
+        table_id = 'table1'
+        new_table = 'new_table_1' 
+        select_cols = ['column2', 'column4', 'column5']
+
+        result = drop_columns(table_id, select_cols, new_table)
+        expected = "CREATE TABLE new_table_1 AS SELECT column2, column4, column5 FROM table1"
+
+        return self.assertEqual(result, expected)
